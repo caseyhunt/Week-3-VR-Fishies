@@ -1,0 +1,78 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEngine;
+
+public class goal : MonoBehaviour
+  
+{
+    AudioSource audioSource;
+    public GameObject floor;
+    public GameObject thisLevel;
+    public GameObject cubeSpawnObj;
+    public GameObject nextLevel;
+    public GameObject sphereMaker;
+    public Vector3 levelSpawnAt;
+    bool collided;
+    
+
+    // Start is called before the first frame update
+    void Start()
+    {
+         audioSource = GetComponent<AudioSource>();
+         collided = false;
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+
+
+        UnityEngine.Debug.Log("collision");
+        if (other.gameObject.tag == "collisiontag")
+        {
+            audioSource.Play();
+           
+            UnityEngine.Debug.Log("collided with box");
+            if (collided == false)
+            {
+                whenCollided();
+            }
+           
+           
+        }
+    }
+
+    void instBoxes()
+    {
+        Instantiate(cubeSpawnObj, levelSpawnAt, Quaternion.identity);
+        
+    }
+
+
+    void whenCollided()
+    {
+        Destroy(floor);
+        Destroy(thisLevel, 3);
+        Destroy(GameObject.FindWithTag("boxmaker"), 1);
+        Destroy(GameObject.FindWithTag("spheres"), 1);
+        Invoke("instBoxes", 2f);
+        Instantiate(nextLevel);
+        collided = true;
+
+    }
+    //void OnCollisionEnter(Collision collision)
+    //{
+    //    Debug.Log("collided with box");
+        
+    //    if (collision.relativeVelocity.magnitude > 2)
+    //        audioSource.Play();
+    //}
+}

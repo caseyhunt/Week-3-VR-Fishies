@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class instantiate_cube : MonoBehaviour
+{
+    public GameObject thing;
+    public float len;
+    public float xoff;
+    public float height;
+    public GameObject instCubes;
+    Vector3 orig;
+    Vector3 where;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        orig = gameObject.transform.position;
+        for (var j = 0; j < height ; j++) { 
+        for (var i = 0; i < len; i++)
+        {
+                where = orig + new Vector3(i * 0.5f - xoff, 0.4f * j, 8);
+           instCubes = Instantiate(thing, where , Quaternion.identity);
+                instCubes.transform.SetParent(gameObject.transform);
+
+                // Debug.Log("loop: " + i);
+                //Debug.Log(i * 0.5f);
+            }
+    }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+}
